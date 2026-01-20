@@ -1,4 +1,5 @@
 import yaml
+from pathlib import Path
 from functools import reduce
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -14,6 +15,75 @@ from sklearn.metrics import (
     mean_absolute_error,
 )
 
+
+class Dataset:
+    # Files
+    path = Path('data')
+    features_file = path / 'features_data_ml_lab.parquet'
+    targets_file = path / 'target_data_ml_lab.parquet'
+    # Relevant columns
+    index = 'TRADE_ID'
+    time_col = 'DATE'
+    date_fmt = '%Y-%m-%d'
+    original_target = 'TARGET_VOL_NORM_RETURN_OIM_5D'
+
+    @classmethod
+    def preprocessing(cls):
+        features = pd.read_parquet(cls.features_file) 
+        labels = pd.read_parquet(cls.targets_file)
+
+        # Join targets
+        dataset = features.join(labels[[cls.original_target]])
+
+        # Find records with null targets and discard them
+        null_target_records = dataset[dataset[cls.original_target].isna()]
+        dataset.drop(null_target_records.index, inplace=True)
+        
+        cls.dataset = dataset.reset_index().set_index(cls.index)
+  
+    @staticmethod
+    def norm_to_classes(a, b):
+        def fn(x):
+            if x < a:
+                return 0
+            elif x >= a and x <= b:
+                return 1
+            elif x > b:
+                return 2
+            else:
+                return None
+                
+        return fn
+
+    @classmethod
+    def init_transformations(cls):
+        # Target transformations
+        cls.y_transformations = dict(
+            norm_distribution_classes={
+                'fn':cls.norm_to_classes,
+                'input_args': [-0.43, 0.043]
+            }
+        )
+
+    @classmethod
+    def target_transformations(cls):
+
+        for item in cls.y_transformations.items():
+            name, fn_info = item
+        
+            if fn_info.get('input_args'):
+                fn = fn_info['fn'](*fn_info['input_args'])
+            else:
+                fn = fn_info['fn']
+        
+            cls.dataset.loc[:, name] = cls.dataset[cls.original_target].map(fn)
+
+    @classmethod
+    def get(cls):
+        cls.preprocessing()
+        cls.init_transformations()
+        cls.target_transformations()
+        return cls.dataset
 
 
 def AUCPR_with_threshold(y_true, y_pred, n_classes=2, percentile=70):
