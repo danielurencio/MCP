@@ -1,0 +1,272 @@
+problem_type: regression
+algorithm_choice: xgboost
+
+time_col: 'DATE'
+target: 'TARGET_VOL_NORM_RETURN_OIM_5D'
+loss: 'mean_absolute_error'
+
+retrain_info:
+    period_type: months
+    train_size: 78
+    test_size: 18
+
+feature_columns:
+  - COT_1
+  - COT_2
+  - COT_3
+  - COT_4
+  - COT_5
+  - CROSS_SECTIONAL_1
+  - CROSS_SECTIONAL_2
+  - CROSS_SECTIONAL_3
+  - CROSS_SECTIONAL_4
+  - CROSS_SECTIONAL_5
+  - CROSS_SECTIONAL_6
+  - CROSS_SECTIONAL_7
+  - CROSS_SECTIONAL_8
+  - CROSS_SECTIONAL_9
+  - CROSS_SECTIONAL_10
+  - CROSS_SECTIONAL_11
+  - CROSS_SECTIONAL_12
+  - CROSS_SECTIONAL_13
+  - CROSS_SECTIONAL_14
+  - CROSS_SECTIONAL_15
+  - CROSS_SECTIONAL_16
+  - CROSS_SECTIONAL_17
+  - CROSS_SECTIONAL_18
+  - CROSS_SECTIONAL_19
+  - CROSS_SECTIONAL_20
+  - CROSS_SECTIONAL_21
+  - CROSS_SECTIONAL_22
+  - CROSS_SECTIONAL_23
+  - CROSS_SECTIONAL_24
+  - CROSS_SECTIONAL_25
+  - CROSS_SECTIONAL_26
+  - CROSS_SECTIONAL_27
+  - CROSS_SECTIONAL_28
+  - CROSS_SECTIONAL_29
+  - CROSS_SECTIONAL_30
+  - CROSS_SECTIONAL_31
+  - CROSS_SECTIONAL_32
+  - CROSS_SECTIONAL_33
+  - FACTOR_1
+  - FACTOR_2
+  - FACTOR_3
+  - FACTOR_4
+  - FACTOR_5
+  - FACTOR_6
+  - FACTOR_7
+  - FACTOR_8
+  - FACTOR_9
+  - FACTOR_10
+  - FACTOR_11
+  - FACTOR_12
+  - FACTOR_13
+  - FACTOR_14
+  - FACTOR_15
+  - FACTOR_16
+  - FACTOR_17
+  - FACTOR_18
+  - FACTOR_19
+  - FACTOR_20
+  - FACTOR_21
+  - FACTOR_22
+  - FACTOR_23
+  - FACTOR_24
+  - FACTOR_25
+  - FACTOR_26
+  - FACTOR_27
+  - FACTOR_28
+  - FACTOR_29
+  - FACTOR_30
+  - FACTOR_31
+  - FACTOR_32
+  - FACTOR_33
+  - FACTOR_34
+  - FACTOR_35
+  - FACTOR_36
+  - FACTOR_37
+  - FACTOR_38
+  - FACTOR_39
+  - FACTOR_40
+  - FACTOR_41
+  - FACTOR_42
+  - FACTOR_43
+  - FACTOR_44
+  - FACTOR_45
+  - FACTOR_46
+  - FACTOR_47
+  - FACTOR_48
+  - FACTOR_49
+  - FACTOR_50
+  - FACTOR_51
+  - FACTOR_52
+  - FACTOR_53
+  - FACTOR_54
+  - FACTOR_55
+  - FACTOR_56
+  - FACTOR_57
+  - FACTOR_58
+  - FACTOR_59
+  - FACTOR_60
+  - FACTOR_61
+  - FACTOR_62
+  - FACTOR_63
+  - FACTOR_64
+  - FACTOR_65
+  - FACTOR_66
+  - FACTOR_67
+  - FACTOR_68
+  - FACTOR_69
+  - FACTOR_70
+  - FACTOR_71
+  - FACTOR_72
+  - FACTOR_73
+  - FACTOR_74
+  - FACTOR_75
+  - FACTOR_76
+  - FACTOR_77
+  - FACTOR_78
+  - LEVEL1_1
+  - LEVEL1_2
+  - LEVEL1_3
+  - LEVEL1_4
+  - LEVEL1_5
+  - LEVEL1_6
+  - LEVEL1_7
+  - LEVEL1_8
+  - LEVEL1_9
+  - LEVEL1_10
+  - LEVEL1_11
+  - LEVEL1_12
+  - LEVEL1_13
+  - LEVEL1_14
+  - LEVEL1_15
+  - LEVEL1_16
+  - LEVEL1_17
+  - LEVEL1_18
+  - LEVEL1_19
+  - LEVEL1_20
+  - LEVEL1_21
+  - LEVEL1_22
+  - LEVEL1_23
+  - LEVEL1_24
+  - LEVEL1_25
+  - LEVEL1_26
+  - LEVEL1_27
+  - LEVEL1_28
+  - LEVEL1_29
+  - LEVEL1_30
+  - LEVEL1_31
+  - LEVEL1_32
+  - LEVEL1_33
+  - LEVEL1_34
+  - LEVEL1_35
+  - LEVEL1_36
+  - MACRO_1
+  - MACRO_2
+  - MACRO_3
+  - MACRO_4
+  - MACRO_5
+  - MACRO_6
+  - MACRO_7
+  - MACRO_8
+  - MACRO_9
+  - MACRO_10
+  - MACRO_11
+  - OPTIONS_1
+  - OPTIONS_2
+  - OPTIONS_3
+  - OPTIONS_4
+  - REGRESSION_1
+  - REGRESSION_2
+  - REGRESSION_3
+  - REGRESSION_4
+  - REGRESSION_5
+  - REGRESSION_6
+  - REGRESSION_7
+  - REGRESSION_8
+  - TRADE_1
+  - TRADE_2
+  - TRADE_3
+  - TRADE_4
+  - TRADE_5
+  - TRADE_6
+  - TRADE_7
+  - TRADE_8
+  - TRADE_9
+  - TRADE_10
+  - TRADE_11
+  - TRADE_13
+  - TRADE_14
+  - TRADE_15
+  - TRADE_16
+  - TRADE_17
+  - TRADE_18
+  - TRADE_19
+  - TRADE_20
+  - TRADE_21
+  - TRADE_22
+  - TRADE_23
+  - TRADE_24
+  - TRADE_25
+  # - TRADE_12_Dairy
+  # - TRADE_12_Emissions
+  # - TRADE_12_Energy
+  # - TRADE_12_Fertilizer
+  # - TRADE_12_Gas
+  # - TRADE_12_Grains
+  # - TRADE_12_Industrial Material
+  # - TRADE_12_Livestock
+  # - TRADE_12_Metals
+  # - TRADE_12_Oilseeds
+  # - TRADE_12_Precious Metals
+  # - TRADE_12_Softs
+
+cross_validation:
+    n_trials: 3
+    hyperparams_ranges:
+    - name: n_estimators
+      data_type: 'int'
+      lower_bound: 20
+      upper_bound: 200
+    
+    - name: learning_rate
+      data_type: 'float'
+      lower_bound: 0.01
+      upper_bound: 0.5
+    
+    - name: max_depth
+      data_type: 'int'
+      lower_bound: 3
+      upper_bound: 7
+      
+    - name: min_child_weight
+      data_type: 'int'
+      lower_bound: 10
+      upper_bound: 100
+      
+    - name: subsample
+      data_type: 'float'
+      lower_bound: 0.1
+      upper_bound: 0.8
+      
+    - name: colsample_bytree
+      data_type: 'float'
+      lower_bound: 0.1
+      upper_bound: 0.8
+      
+    - name: gamma
+      data_type: 'float'
+      lower_bound: 0.01
+      upper_bound: 10
+      
+    - name: reg_alpha
+      data_type: 'float'
+      lower_bound: 0.01
+      upper_bound: 10
+      
+    - name: reg_lambda
+      data_type: 'float'
+      lower_bound: 0.01
+      upper_bound: 10
