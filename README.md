@@ -14,6 +14,24 @@ test_end = '2021-09-28'
 th = TaskHandler('PoC').train_with_best_params(dataset, train_start, train_end, test_end)
 ```
 
+### Sentiment Scores
+```python
+commodities_datasets = {k:dataset[dataset.TRADE_12 == k] for k in dataset.TRADE_12.unique()}
+commodity_list = list(commodities_datasets.keys())
+
+arr = list()
+start_ = '2010-01-05'
+end_ = '2011-04-12'
+
+for i in range(len(commodity_list)):
+    print(commodity_list[i])
+    kpis_df = TaskHandler('sentiment_scores').simple_retrain(dataset, start_, end_)
+    arr.append(kpis_df)
+
+pd.concat(arr).to_csv('sentiment_scores_v0.csv', index=False)
+```
+
+
 #### To do:
 ```python
 from datetime import datetime
