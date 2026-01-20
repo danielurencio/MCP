@@ -1,0 +1,9 @@
+numpy
+pandas
+optuna
+scikit-learn
+xgboost
+pyarrow
+fastparquet
+jupyterlab
+ipywidgets
