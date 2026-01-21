@@ -2,6 +2,11 @@
 #### Model Construction Planner
 
 Correct Machine Learning formuation for financial time series problems requires careful handling of out-of-sample data. This is pivotal for both model selection and interpreting performance.
+
+Any mantainable solution focused on training and evaluating ML models of the aforementioned nature needs to consider at its core the capability of splitting training, validation, and testing sets such that:
+* Observations are ordered in time, that is, training observations precede validation, and validation precedes testing.
+* Overlapping forward returns are corrected by introducing gaps when using hold out sets for evaluation.
+
 <p align="center">
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
