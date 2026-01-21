@@ -15,6 +15,11 @@ Failure to respect time ordering can introduce unnecessary biases and lead to mi
 <img src="imgs/gaping_targets.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
 </p>
 
+$$
+\sum_{i=1}^n X_i
+$$
+
+
 Usage
 ```python
 import warnings
