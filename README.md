@@ -18,9 +18,6 @@ Consider the next image, where three observations, denoted by $x_{i}$, have as i
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
 
-If targets $Y$ within a dataset are expressed as forward returns that overlap in time, the same underlying periods can be implicitly counted multiple times. This can lead to misleadingly inflated performance when adjacent observations rely on overlapping returns to compute the loss function being optimized.
-
-Consider the image below, where three observations, denoted by $x_i$, each have a target return spanning four future time steps. Using this data as is for performance evaluation would be analogous to tripling a student’s grade for answering three questions that all belong to a single exam.
 
 <p align="center">
 <img src="imgs/gaping_targets.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
