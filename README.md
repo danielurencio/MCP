@@ -2,9 +2,9 @@
 Model Construction Pipeline
 
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
-<div style="text-align: center;">
+<p align: "center">
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
-</div>
+</p>
 
 Usage
 ```python
