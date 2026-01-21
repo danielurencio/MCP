@@ -1,4 +1,6 @@
 # MCP (Model Construction Planner)
+
+## Time-oriented ML design
 A correct machine learning formulation for financial time series problems requires careful handling of out-of-sample data. This is critical for both model selection and the correct interpretation of performance.
 
 Any maintainable solution for training and evaluating machine learning models in this context must, at its core, support the proper splitting of training, validation, and testing sets such that:
@@ -7,6 +9,9 @@ Any maintainable solution for training and evaluating machine learning models in
 * Overlapping forward returns are addressed by introducing appropriate gaps when using holdout sets for evaluation.
 
 Failure to respect time ordering can introduce unnecessary biases and lead to misleading results. For example, if a dataset is randomly shuffled before being split into training and test sets, observations from the future may end up in the training set while earlier observations are used for testing. This setup does not reflect how time series problems are encountered in real-world financial settings. Financial contexts are inherently path-dependent, relying on information available up to a given point in time. As a result, such data leakage can artificially inflate model performance by incorporating information that would not have been available under normal operating conditions.
+
+### Evaluation and model selection considerations
+If targets, $Y$, within a a dataset are expressed as forward returns that overlap in time
 
 <p align="center">
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
