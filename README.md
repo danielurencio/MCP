@@ -2,6 +2,8 @@
 Model Construction Pipeline
 
 ![Overlapping targets](imgs/overlapping_targets.jpeg)
+<img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
+
 Usage
 ```python
 import warnings
