@@ -17,7 +17,7 @@ Consider the next image, where three observations, denoted by $x_{i}$, have as i
 <p align="center">
 <img src="imgs/overlapping_targets.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
-
+In the context of model selection or hyperparameter tuning, a type of "confounding factor" can be introduced if we evaluate model variants with this type of targets. Is the best performing model truly the best or is it fitting to highly correlated signals? Is the learning rate correctly set or Maduro's capture influenced the markets?
 
 <p align="center">
 <img src="imgs/gaping_targets.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
