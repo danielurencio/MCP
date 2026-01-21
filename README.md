@@ -1,6 +1,7 @@
 # MCP
 Model Construction Pipeline
 
+![Overlapping targets](imgs/overlapping_targets.jpeg)
 Usage
 ```python
 import warnings
