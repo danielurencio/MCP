@@ -21,7 +21,9 @@ In the context of model selection or hyperparameter tuning, a type of "confoundi
 
 
 ### Gaps introduction as a fix
-f
+Each evaluation observation should correspond to exactly one realized future outcome. This is ensured by selecting evaluation records whose target windows do not overlap.
+If the prediction horizon spans four time steps, then during evaluation only, records must be chosen such that their target windows are at least four time steps apart.
+
 <p align="center">
 <img src="imgs/gaping_targets.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
 </p>
