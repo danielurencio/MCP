@@ -233,6 +233,7 @@ The method `train_with_best_params` performs the following:
 
 #### Evaluation
 To evaluate the previous model fit, we will use the Mean Absolute Error.
+
 $$
 \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
 $$
