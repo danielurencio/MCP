@@ -117,7 +117,7 @@ commodity_list = list(commodities_datasets.keys())
 
 arr = list()
 start = '2010-01-05'
-end = '2011-04-12'
+end = '2021-09-28'
 
 for i in range(len(commodity_list)):
     print(commodity_list[i])
@@ -151,6 +151,8 @@ enhanced_dataset = pd.merge(dataset.reset_index(),
 
 enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_scores['DATE'].min()]
 ```
+
+## Secondary Model
 
 ```python
 import warnings
