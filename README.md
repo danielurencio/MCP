@@ -11,7 +11,7 @@ Any maintainable solution for training and evaluating machine learning models in
 Failure to respect time ordering can introduce unnecessary biases and lead to misleading results. For example, if a dataset is randomly shuffled before being split into training and test sets, observations from the future may end up in the training set while earlier observations are used for testing. This setup does not reflect how time series problems are encountered in real-world financial settings. Financial contexts are inherently path-dependent, relying on information available up to a given point in time. As a result, such data leakage can artificially inflate model performance by incorporating information that would not have been available under normal operating conditions.
 
 ### Evaluation and model selection considerations
-If targets, $Y$, within a a dataset are expressed as forward returns that overlap in time, one can erroneously count periods that contributed to the calculation of returns more than once. This can misleadingly inflate performance if adjacent observations consider overlapping returns to calculate a loss for the function to be optimized.
+If targets, $Y$, within a dataset are expressed as forward returns that overlap in time, one can erroneously count periods that contributed to the calculation of returns more than once. This can misleadingly inflate performance if adjacent observations consider overlapping returns to calculate a loss for the function to be optimized.
 
 Consider the next image, where three observations, denoted by $x_{i}$, have as its target a value, or return, that spans across four time steps in the future. Using this data "as is" for performance evaluation would be similar to tripling a student's grades for answering three question even though these were part of one single exam.
 <p align="center">
@@ -178,9 +178,9 @@ TimeFolder(train_size,
 ```
 The previous command would output the following:
 ```python
-[[datetime.datetime(2010, 1, 5, 0, 0),
-  datetime.datetime(2015, 11, 24, 0, 0),
-  datetime.datetime(2017, 1, 24, 0, 0)],
+[[datetime.datetime(2010, 1, 5, 0, 0),    # train start
+  datetime.datetime(2015, 11, 24, 0, 0),  # test start
+  datetime.datetime(2017, 1, 24, 0, 0)],  # test end
  [datetime.datetime(2011, 3, 8, 0, 0),
   datetime.datetime(2017, 1, 24, 0, 0),
   datetime.datetime(2018, 3, 27, 0, 0)],
