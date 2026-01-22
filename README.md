@@ -140,6 +140,8 @@ Gas
 Dairy
 Emissions
 Industrial Material
+Coal
+Fertilizers
 ```
  
  Each model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
@@ -232,8 +234,10 @@ The method `train_with_best_params` performs the following:
 3. Retrains the model over the entire training set once the best hyperparameters have been obtained.
 
 #### Evaluation
-To evaluate the previous model fit, we will use the Mean Absolute Error.
+To evaluate the model fit, we will use the Mean Absolute Error (_MAE_).
 
 $$
 \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
 $$
+
+The choice is backed by the fact that this metric is more interpretable than the mean squared error, as it is expressed in the same units as the original target. In this case, the target is expressed as z-scores, so our _MAE_ will tell us to what extent, on average, our predictions deviate from the truth.
