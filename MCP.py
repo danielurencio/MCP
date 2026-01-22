@@ -206,7 +206,7 @@ class TimeFolder:
                          start_date,
                          end_date,
                          cv_folds,
-                         space_to_fil,
+                         space_to_fill,
                          period_type,
                          periods,
                          fmt='%Y-%m-%d',
