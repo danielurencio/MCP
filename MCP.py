@@ -201,6 +201,31 @@ class TimeFolder:
         
         return self.get_time_splits(new_start_date_dt, end_date, arr)
 
+    @classmethod
+    def sizes_calculator(cls,
+                         start_date,
+                         end_date,
+                         cv_folds,
+                         space_to_fil,
+                         period_type,
+                         periods,
+                         fmt='%Y-%m-%d',
+                         dates=None):
+
+        if not dates:
+            dates = list()
+
+        date = datetime.strptime(start_date, fmt)
+
+        while date <= datetime.strptime(end_date, fmt):
+            dates.append(date)
+            date += relativedelta(**{period_type:periods})
+
+        space_to_fill_index = int(space_to_fill*len(dates))
+        test_size = int(len(dates[:space_to_fill_index]) / cv_folds)
+        train_size = len(dates[space_to_fill_index:])
+
+        return train_size, test_size
 
 
 class ModelTrainer:
