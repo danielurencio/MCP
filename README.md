@@ -138,6 +138,7 @@ Energy
 Livestock
 Gas
 Dairy
+Emissions
 ```
  
  Each model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
