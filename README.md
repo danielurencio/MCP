@@ -68,17 +68,17 @@ Multiclass probability outputs from group-specific models act as soft, distribut
 
 For a multiclass classification problem with \(K\) classes, the softmax function maps the raw model outputs (logits) \(z_i\) into class probabilities:
 
-\[
+$$
 p_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
-\]
+$$
 
 The associated cost function, commonly referred to as **categorical cross-entropy**, is defined as:
 
-\[
+$$
 \mathcal{L} = - \sum_{i=1}^{K} y_i \log(p_i)
-\]
+$$
 
-where \(y_i\) is the true class indicator and \(p_i\) is the predicted probability for class \(i\).
+where $y_i$ is the true class indicator and $p_i$ is the predicted probability for class \(i\).
 
 ---
 
