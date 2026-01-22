@@ -66,7 +66,7 @@ Now that an appropriate approach for handling financial time-series data in mach
 Multiclass probability outputs from group-specific models act as soft, distribution-aware sentiment signals that encode group-level expectations and uncertainty, and can be used as informative features by a higher-level model.
 
 
-For a multiclass classification problem with \(K\) classes, the softmax function maps the raw model outputs (logits) \(z_i\) into class probabilities:
+For a multiclass classification problem with \(K\) classes, the softmax function maps the raw model outputs (logits) $z_i$ into class probabilities:
 
 $$
 p_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
