@@ -126,8 +126,16 @@ for i in range(len(commodity_list)):
 
 pd.concat(arr).to_csv('sentiment_scores_v0.csv', index=False)
 ```
+ We can see from the last code snippet that for each unique value of the column `TRADE_12` (commodity groups), a model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
 
+ ```yaml
+retrain_info:
+    period_type: weeks
+    train_size: 52
+    test_size: 1
+```
 
+What that means is that for each week, we will use the preceding 52 weeks to generate scores. The scored hold-out periods are then going to be used as new features that will have to be joined to the original dataset.
 
 ```python
 import warnings
