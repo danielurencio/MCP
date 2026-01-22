@@ -135,7 +135,22 @@ retrain_info:
     test_size: 1
 ```
 
-What that means is that for each week, we will use the preceding 52 weeks to generate scores. The scored hold-out periods are then going to be used as new features that will have to be joined to the original dataset.
+What that means is that for each week, within the specified period, we will use the preceding 52 weeks to generate scores. The scored hold-out periods will then be used as new features that need to be joined to the original dataset.
+
+
+```python
+import pandas as pd
+
+join_cols = ['DATE', 'TRADE_ID']
+sentiment_scores = pd.read_csv('sentiment_scores_v0.csv')
+enhanced_dataset = pd.merge(dataset.reset_index(),
+                            sentiment_scores,
+                            how='left',
+                            left_on=join_cols,
+                            right_on=join_cols)
+
+enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_scores['DATE'].min()]
+```
 
 ```python
 import warnings
