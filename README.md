@@ -106,7 +106,7 @@ Importantly, only the predictions obtained on these holdout periods (single-peri
 
 As a result, when the secondary model is trained, it only has access to sentiment scores that were computed using past data relative to each observation. The secondary model therefore starts at period $N+1$, ensuring that every feature used at time $t$ is derived exclusively from information available up to time $t-1$.
 
-
+#### Training
 ```python
 import warnings
 from MCP import Dataset, TaskHandler
@@ -126,7 +126,21 @@ for i in range(len(commodity_list)):
 
 pd.concat(arr).to_csv('sentiment_scores_v0.csv', index=False)
 ```
- We can see from the last code snippet that for each unique value of the column `TRADE_12` (commodity groups), a model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
+ We can see from the last code snippet that for each unique value of the column `TRADE_12` (commodity groups):
+
+```bash
+Precious Metals
+Oilseeds
+Softs
+Grains
+Metals
+Energy
+Livestock
+Gas
+Dairy
+```
+ 
+ Each model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
 
  ```yaml
 retrain_info:
@@ -154,6 +168,7 @@ enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_score
 
 ## Secondary Model
 
+#### Cross Validation Through Time Arrangement
 Once the sentiment scores have been generated and we have a unified, or enhanced, dataset, we can proceed with the secondary model, which will leverage the generated probabilities obtained after fitting a model for each commodity group contained in the original dataset. To clarify how we can use the MCP framework to perform hyperparameter tuning, we should first use the `TimeFolder` class to calculate the training and validation set sizes in our configuration plan.
 
 ```python
@@ -178,9 +193,9 @@ TimeFolder(train_size,
 ```
 The previous command would output the following:
 ```python
-[[datetime.datetime(2010, 1, 5, 0, 0),    # train start
-  datetime.datetime(2015, 11, 24, 0, 0),  # test start
-  datetime.datetime(2017, 1, 24, 0, 0)],  # test end
+[[datetime.datetime(2010, 1, 5, 0, 0),    # train start |      intervals are:
+  datetime.datetime(2015, 11, 24, 0, 0),  # test start  | -->  [train start, test start) &
+  datetime.datetime(2017, 1, 24, 0, 0)],  # test end    |      [test start, test end]
  [datetime.datetime(2011, 3, 8, 0, 0),
   datetime.datetime(2017, 1, 24, 0, 0),
   datetime.datetime(2018, 3, 27, 0, 0)],
@@ -194,19 +209,19 @@ The previous command would output the following:
   datetime.datetime(2020, 7, 28, 0, 0),
   datetime.datetime(2021, 9, 28, 0, 0)]]
 ```
+This functionality is already incorporated within `TaskHandler`. 
+
+#### Training
+(See `models/PoC.yaml` for the details on how to configure cross-validation.)
 
 ```python
-import warnings
-from MCP import Dataset, TaskHandler
-warnings.filterwarnings("ignore")
+from MCP TaskHandler
 
-
-train_start = '2010-01-05'
+train_start = enhanced_dataset['DATE'].min()
 train_end = '2018-03-27'
 test_end = '2021-09-28'
 
-dataset = Dataset.get()
-th = TaskHandler('PoC').train_with_best_params(dataset, train_start, train_end, test_end)
+th = TaskHandler('PoC').train_with_best_params(enhanced_dataset, train_start, train_end, test_end)
 ```
 
 
