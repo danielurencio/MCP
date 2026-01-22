@@ -224,5 +224,8 @@ test_end = '2021-09-28'
 
 th = TaskHandler('PoC').train_with_best_params(enhanced_dataset, train_start, train_end, test_end)
 ```
-
+The method `train_with_best_params` performs the following:
+1. Splits the dataset into a training and a hold-out dataset.
+2. Obtains the best hyperparameter set after having done cross-validation through time using a moving window across the training set.
+3. Retrains the model over the entire training set once the best hyperparameters have been obtained.
 
