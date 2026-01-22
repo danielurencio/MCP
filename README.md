@@ -98,6 +98,14 @@ This transformation is implemented by the `norm_to_classes` method of the `Datas
 
 In the current setup, the thresholds are set to `a = -0.43` and `b = 0.043`. This procedure divides the normalized return distribution into three regions (lower, central, and upper) allowing a continuous target to be used in a classification setting while still keeping information about how extreme each observation is.
 
+#### Data leakage considerations
+
+No data leakage is introduced in this setup because sentiment scores are always generated using information strictly prior to the prediction period. For each step, a fixed number of preceding periods, denoted as $N$, is used to train the sentiment model, and predictions are produced only for the subsequent period, $N+1$.
+
+Importantly, only the predictions obtained on these holdout periods (single-period observations) are retained. These out-of-sample predictions are then joined back to the original dataset, aligned with their corresponding timestamps.
+
+As a result, when the secondary model is trained, it only has access to sentiment scores that were computed using past data relative to each observation. The secondary model therefore starts at period $N+1$, ensuring that every feature used at time $t$ is derived exclusively from information available up to time $t-1$.
+
 
 ```python
 import warnings
