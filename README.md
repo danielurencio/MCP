@@ -96,11 +96,11 @@ This transformation is implemented by the `norm_to_classes` method of the `Datas
 - Returns with z-scores between `a` and `b` are labeled as class `1`  
 - Returns with z-scores higher than `b` are labeled as class `2`  
 
-In the current setup, the thresholds are set to `a = -0.43` and `b = 0.043`. This procedure divides the normalized return distribution into three regions (lower, central, and upper) allowing a continuous target to be used in a classification setting while still keeping information about how extreme each observation is.
+In the current setup, the thresholds are set to `a = -0.43` and `b = 0.043`. This procedure divides the normalized return distribution into three regions (lower, central, and upper), allowing a continuous target to be used in a classification setting while still retaining information about the extent to which each observation is extreme.
 
 #### Data leakage considerations
 
-No data leakage is introduced in this setup because sentiment scores are always generated using information strictly prior to the prediction period. For each step, a fixed number of preceding periods, denoted as $N$, is used to train the sentiment model, and predictions are produced only for the subsequent period, $N+1$.
+No data leakage is introduced in this setup because sentiment scores are always generated using information strictly before the prediction period. For each step, a fixed number of preceding periods, denoted as $N$, is used to train the sentiment model, and predictions are produced only for the subsequent period, $N+1$.
 
 Importantly, only the predictions obtained on these holdout periods (single-period observations) are retained. These out-of-sample predictions are then joined back to the original dataset, aligned with their corresponding timestamps.
 
@@ -154,6 +154,47 @@ enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_score
 
 ## Secondary Model
 
+Once the sentiment scores have been generated and we have a unified, or enhanced, dataset, we can proceed with the secondary model, which will leverage the generated probabilities obtained after fitting a model for each commodity group contained in the original dataset. To clarify how we can use the MCP framework to perform hyperparameter tuning, we should first use the `TimeFolder` class to calculate the training and validation set sizes in our configuration plan.
+
+```python
+from MCP import TimeFolder
+
+start_date = '2010-01-05'
+end_date = '2021-09-28'
+cv_folds = 5
+train_size, test_size = TimeFolder.sizes_calculator(start_date
+                                                    end_date
+                                                    cv_folds=cv_folds,
+                                                    space_to_fil=0.5,    # <-- This is the fraction of the period to be used for testing/validation
+                                                    period_type='weeks', #     in the moving window. In other words, 50% of the periods will be used
+                                                    periods=1)           #     to construct 5 folds that will be used to validate/evaluate a model.
+```
+The class method `sizes_calculator` returns a tuple that can be fed into the class again to get the folds:
+```python
+TimeFolder(train_size,
+           test_size,
+           period_type='weeks').get_time_splits(start_date, end_date)
+
+```
+The previous command would output the following:
+```python
+[[datetime.datetime(2010, 1, 5, 0, 0),
+  datetime.datetime(2015, 11, 24, 0, 0),
+  datetime.datetime(2017, 1, 24, 0, 0)],
+ [datetime.datetime(2011, 3, 8, 0, 0),
+  datetime.datetime(2017, 1, 24, 0, 0),
+  datetime.datetime(2018, 3, 27, 0, 0)],
+ [datetime.datetime(2012, 5, 8, 0, 0),
+  datetime.datetime(2018, 3, 27, 0, 0),
+  datetime.datetime(2019, 5, 28, 0, 0)],
+ [datetime.datetime(2013, 7, 9, 0, 0),
+  datetime.datetime(2019, 5, 28, 0, 0),
+  datetime.datetime(2020, 7, 28, 0, 0)],
+ [datetime.datetime(2014, 9, 9, 0, 0),
+  datetime.datetime(2020, 7, 28, 0, 0),
+  datetime.datetime(2021, 9, 28, 0, 0)]]
+```
+
 ```python
 import warnings
 from MCP import Dataset, TaskHandler
@@ -169,34 +210,3 @@ th = TaskHandler('PoC').train_with_best_params(dataset, train_start, train_end, 
 ```
 
 
-
-#### To do:
-Introduce gaps in train and test fold sizes.
-```python
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-
-from MCP import TimeFolder
-
-
-fmt = '%Y-%m-%d'
-dates = list()
-date = datetime.strptime(start_date, fmt)
-space_to_fill = 0.5
-cv_folds = 5
-
-while date <= datetime.strptime(end_date, fmt):
-    dates.append(date)
-    date += relativedelta(weeks=1)
-
-space_to_fill_index = int(space_to_fill*len(dates))
-test_size = int(len(dates[:space_to_fill_index]) / cv_folds)
-train_size = len(dates[space_to_fill_index:])
-
-print(train_size, test_size)
-
-time_folder = TimeFolder(train_size=train_size, test_size=test_size, period_type='weeks')
-folds = time_folder.get_time_splits(start_date, end_date)
-
-assert cv_folds == len(folds)
-```
