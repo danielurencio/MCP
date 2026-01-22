@@ -6,9 +6,10 @@ target: 'TARGET_VOL_NORM_RETURN_OIM_5D'
 loss: 'mean_absolute_error'
 
 retrain_info:
-    period_type: months
-    train_size: 78
-    test_size: 18
+    period_type: weeks
+    train_size: 307
+    test_size: 61
+    gap: 5
 
 feature_columns:
   - COT_1
