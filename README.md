@@ -65,6 +65,10 @@ Now that an appropriate approach for handling financial time-series data in mach
 ### Sentiment Scores
 
 ```python
+import warnings
+from MCP import Dataset, TaskHandler
+
+dataset = Dataset.get()
 commodities_datasets = {k:dataset[dataset.TRADE_12 == k] for k in dataset.TRADE_12.unique()}
 commodity_list = list(commodities_datasets.keys())
 
