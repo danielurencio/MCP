@@ -38,12 +38,26 @@ Under this approach, five custom classes—or logical components—can be config
 <img src="imgs/framework.jpeg" alt="Description of image" style="width:90%; max-width:200px;">
 </p>
 
-* `TaskHandler`: This class takes as inputs all the content from the configuration file.
-* `Model Trainer`: This is where actual training occurs. To do so the following is performed:
-  - Training and Validation sets are split.
-  - Features are selected
-  - The model is fitted
-  - Predictions are made in the validation set
+
+### Core components
+
+#### `TaskHandler`
+Central orchestration layer. It loads and parses the YAML configuration file and wires together dataset handling, time-based folds, cross-validation, hyperparameter optimization, and model training workflows.
+
+#### `ModelTrainer`
+Encapsulates the model training and evaluation logic over time-ordered splits. For each fold, it:
+
+- Builds training and validation datasets based on time boundaries  
+- Selects and prepares feature and target matrices  
+- Fits the model instance provided by `ModelObject`  
+- Generates predictions on the validation set  
+- Computes evaluation metrics across folds  
+
+#### `TimeFolder`
+Generates a sequence of rolling, time-ordered training and validation intervals. It supports configurable training windows, validation windows, and optional gaps to prevent target overlap in forward-looking evaluations.
+
+#### `ModelObject`
+Factory and wrapper for machine learning models. It instantiates a model based on the selected algorithm, problem type (regression, binary, or multiclass classification), and hyperparameters, and exposes a uniform `fit` and `predict` interface.
 
  
 Usage
