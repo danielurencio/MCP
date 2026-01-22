@@ -139,6 +139,7 @@ Livestock
 Gas
 Dairy
 Emissions
+Industrial Material
 ```
  
  Each model is fitted across the period specified by the variables `start` and `end`. Within the method `simple_retrain`, sentiment scores are generated according to this configuration (contained in the `sentiment_scores.yaml` file):
@@ -213,6 +214,7 @@ The previous command would output the following:
 This functionality is already incorporated within `TaskHandler`. 
 
 #### Training
+A regression model will be configured to predict the target `TARGET_VOL_NORM_RETURN_OIM_5D`, which are the normalized returns of the following 22 days (although the target name in the original file has a `5D` suffix).
 (See `models/PoC.yaml` for the details on how to configure cross-validation.)
 
 ```python
@@ -230,3 +232,7 @@ The method `train_with_best_params` performs the following:
 3. Retrains the model over the entire training set once the best hyperparameters have been obtained.
 
 #### Evaluation
+To evaluate the previous model fit, we will use the Mean Absolute Error.
+$$
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
+$$
