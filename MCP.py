@@ -238,7 +238,7 @@ class ModelTrainer:
     def get_datasets(df, time_col):
         def fn(d):
             train = df[(df[time_col] >= d[0]) & (df[time_col] < d[1])]
-            valid = df[(df[time_col] >= d[1]) & (df[time_col] < d[2])]
+            valid = df[(df[time_col] >= d[1]) & (df[time_col] <= d[2])] # Important!
             return train, valid
         return fn
     
