@@ -162,7 +162,7 @@ enhanced_dataset = pd.merge(dataset.reset_index(),
                             sentiment_scores,
                             how='left',
                             left_on=join_cols,
-                            right_on=join_cols)
+                            right_on=join_cols).fillna(-1)
 
 enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_scores['DATE'].min()]
 ```
@@ -229,3 +229,4 @@ The method `train_with_best_params` performs the following:
 2. Obtains the best hyperparameter set after having done cross-validation through time using a moving window across the training set.
 3. Retrains the model over the entire training set once the best hyperparameters have been obtained.
 
+#### Evaluation
