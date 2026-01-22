@@ -63,6 +63,16 @@ Now that an appropriate approach for handling financial time-series data in mach
 
 ## Primary model
 ### Probabilities as "Sentiment Scores"
+The target variable is defined as normalized (z-scored) forward returns and is originally a continuous value. For classification problems, this continuous target is transformed into discrete classes based on its position in the normalized return distribution.
+
+This transformation is implemented by the `norm_to_classes` method. Given two z-score thresholds, `a` and `b`, each normalized return is assigned to one of three classes:
+
+- Returns with z-scores lower than `a` are labeled as class `0`  
+- Returns with z-scores between `a` and `b` are labeled as class `1`  
+- Returns with z-scores higher than `b` are labeled as class `2`  
+
+In the current setup, the thresholds are set to `a = -0.43` and `b = 0.043`. This procedure divides the normalized return distribution into three regions—lower, central, and upper—allowing a continuous target to be used in a classification setting while still keeping information about how extreme each observation is.
+
 
 ```python
 import warnings
