@@ -61,22 +61,9 @@ Factory and wrapper for machine learning models. It instantiates a model based o
 
 Now that an appropriate approach for handling financial time-series data in machine learning has been outlined, a stacked model composed of a primary model and a secondary model is introduced. The outputs of the primary model are used as inputs, or features, for the secondary model.
 
-Usage
-```python
-import warnings
-from MCP import Dataset, TaskHandler
-warnings.filterwarnings("ignore")
-
-
-train_start = '2010-01-05'
-train_end = '2018-03-27'
-test_end = '2021-09-28'
-
-dataset = Dataset.get()
-th = TaskHandler('PoC').train_with_best_params(dataset, train_start, train_end, test_end)
-```
-
+## Primary model
 ### Sentiment Scores
+
 ```python
 commodities_datasets = {k:dataset[dataset.TRADE_12 == k] for k in dataset.TRADE_12.unique()}
 commodity_list = list(commodities_datasets.keys())
@@ -92,6 +79,23 @@ for i in range(len(commodity_list)):
 
 pd.concat(arr).to_csv('sentiment_scores_v0.csv', index=False)
 ```
+
+
+
+```python
+import warnings
+from MCP import Dataset, TaskHandler
+warnings.filterwarnings("ignore")
+
+
+train_start = '2010-01-05'
+train_end = '2018-03-27'
+test_end = '2021-09-28'
+
+dataset = Dataset.get()
+th = TaskHandler('PoC').train_with_best_params(dataset, train_start, train_end, test_end)
+```
+
 
 
 #### To do:
