@@ -32,7 +32,7 @@ If the prediction horizon spans four time steps, then during evaluation only, re
 
 This proposal is based on leveraging reusable custom Python classes for training and evaluating supervised machine learning models, where time-ordered data folds serve as the primary guiding principle. Reusability and parametrization are what make it possible to plan model construction through simple configuration schemes.
 
-Under this approach, five custom classes—or logical components—can be configured and instantiated using concise syntax defined in a YAML file.
+Under this approach, five custom classes (or logical components) can be configured and instantiated using concise syntax defined in a YAML file.
 
 <p align="center">
 <img src="imgs/framework.jpeg" alt="Description of image" style="width:90%; max-width:200px;">
@@ -59,7 +59,8 @@ Generates a sequence of rolling, time-ordered training and validation intervals.
 #### `ModelObject`
 Factory and wrapper for machine learning models. It instantiates a model based on the selected algorithm, problem type (regression, binary, or multiclass classification), and hyperparameters, and exposes a uniform `fit` and `predict` interface.
 
- 
+Now that an appropriate approach for handling financial time-series data in machine learning has been outlined, a stacked model composed of a primary model and a secondary model is introduced. The outputs of the primary model are used as inputs, or features, for the secondary model.
+
 Usage
 ```python
 import warnings
