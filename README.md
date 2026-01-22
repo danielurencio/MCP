@@ -35,7 +35,7 @@ This proposal is based on leveraging reusable custom Python classes for training
 Under this approach, five custom classes—or logical components—can be configured and instantiated using concise syntax defined in a YAML file.
 
 <p align="center">
-<img src="imgs/framework.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
+<img src="imgs/framework.jpeg" alt="Description of image" style="width:90%; max-width:200px;">
 </p>
 
 Usage
