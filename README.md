@@ -65,6 +65,30 @@ Now that an appropriate approach for handling financial time-series data in mach
 ### Probabilities as "Sentiment Scores"
 Multiclass probability outputs from group-specific models act as soft, distribution-aware sentiment signals that encode group-level expectations and uncertainty, and can be used as informative features by a higher-level model.
 
+
+For a multiclass classification problem with \(K\) classes, the softmax function maps the raw model outputs (logits) \(z_i\) into class probabilities:
+
+\[
+p_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
+\]
+
+The associated cost function, commonly referred to as **categorical cross-entropy**, is defined as:
+
+\[
+\mathcal{L} = - \sum_{i=1}^{K} y_i \log(p_i)
+\]
+
+where \(y_i\) is the true class indicator and \(p_i\) is the predicted probability for class \(i\).
+
+---
+
+#### Interpretation as sentiment scores
+
+The softmax output represents a probability distribution over classes, with all class probabilities summing to one. In the context of bearish, neutral, and bullish classes, these probabilities can be interpreted as **sentiment scores**, reflecting both the predicted regime and the model’s confidence.
+
+Rather than assigning a single discrete label, the model provides a graded view of expected outcomes, capturing uncertainty and relative strength across market states.
+
+
 #### Target variable transformation
 The target variable is defined as normalized (z-scored) forward returns and is originally a continuous value. For classification problems, this continuous target is transformed into discrete classes based on its position in the normalized return distribution.
 
