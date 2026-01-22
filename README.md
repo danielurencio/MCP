@@ -80,8 +80,6 @@ $$
 
 where $y_i$ is the true class indicator and $p_i$ is the predicted probability for class \(i\).
 
----
-
 #### Interpretation as sentiment scores
 
 The softmax output represents a probability distribution over classes, with all class probabilities summing to one. In the context of bearish, neutral, and bullish classes, these probabilities can be interpreted as **sentiment scores**, reflecting both the predicted regime and the model’s confidence.
