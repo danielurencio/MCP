@@ -63,6 +63,8 @@ Now that an appropriate approach for handling financial time-series data in mach
 
 ## Primary model
 ### Probabilities as "Sentiment Scores"
+Multiclass probability outputs from group-specific models act as soft, distribution-aware sentiment signals that encode group-level expectations and uncertainty, and can be used as informative features by a higher-level model.
+
 #### Target variable transformation
 The target variable is defined as normalized (z-scored) forward returns and is originally a continuous value. For classification problems, this continuous target is transformed into discrete classes based on its position in the normalized return distribution.
 
