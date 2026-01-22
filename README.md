@@ -38,7 +38,14 @@ Under this approach, five custom classes—or logical components—can be config
 <img src="imgs/framework.jpeg" alt="Description of image" style="width:90%; max-width:200px;">
 </p>
 
-* `TaskHandler`: This class takes as inputs all the content from the configuration file. 
+* `TaskHandler`: This class takes as inputs all the content from the configuration file.
+* `Model Trainer`: This is where actual training occurs. To do so the following is performed:
+  - Training and Validation sets are split.
+  - Features are selected
+  - The model is fitted
+  - Predictions are made in the validation set
+
+ 
 Usage
 ```python
 import warnings
