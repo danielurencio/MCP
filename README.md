@@ -62,7 +62,7 @@ Factory and wrapper for machine learning models. It instantiates a model based o
 Now that an appropriate approach for handling financial time-series data in machine learning has been outlined, a stacked model composed of a primary model and a secondary model is introduced. The outputs of the primary model are used as inputs, or features, for the secondary model.
 
 ## Primary model
-### Sentiment Scores
+### Probabilities as "Sentiment Scores"
 
 ```python
 import warnings
