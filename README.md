@@ -28,10 +28,11 @@ If the prediction horizon spans four time steps, then during evaluation only, re
 <img src="imgs/gaping_targets.jpeg" alt="Description of image" style="width:85%; max-width:200px;">
 </p>
 
-$$
-\sum_{i=1}^n X_i
-$$
+### How can we put this into practice?
 
+This proposal is based on leveraging reusable custom Python classes for training and evaluating supervised machine learning models, where time-ordered data folds serve as the primary guiding principle. Reusability and parametrization are what make it possible to plan model construction through simple configuration schemes.
+
+Under this approach, five custom classes—or logical components—can be configured and instantiated using concise syntax defined in a YAML file.
 
 Usage
 ```python
