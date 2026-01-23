@@ -3,7 +3,9 @@ algorithm_choice: xgboost
 
 time_col: 'DATE'
 target: 'TARGET_VOL_NORM_RETURN_OIM_5D'
-id: 'TRADE_ID'
+ix:
+  - DATE
+  - TRADE_ID
 loss: 'mean_absolute_error'
 
 retrain_info:
