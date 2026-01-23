@@ -246,6 +246,8 @@ $$
 The choice is backed by the fact that this metric is more interpretable than the mean squared error, as it is expressed in the same units as the original target. In this case, the target is expressed as z-scores, so our _MAE_ will tell us to what extent our predictions deviate on average from the truth.
 
 ```python
+from sklearn.metrics import mean_absolute_error
+
 def group_mae(df):
     y_true = df['y_true'].values
     y_pred = df['y_pred'].values
@@ -254,5 +256,5 @@ def group_mae(df):
 df_test.groupby('DATE').apply(group_mae).plot(title='Monthly MAE')
 ```
 <p align="center">
-<img src="imgs/monthly_mae.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
+<img src="imgs/weekly_mae.png" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
