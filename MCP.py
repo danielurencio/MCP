@@ -389,9 +389,11 @@ class TaskHandler:
             self.train_size = self.config['retrain_info']['train_size']
             self.test_size = self.config['retrain_info']['test_size']
             self.period_type = self.config['retrain_info']['period_type']
+            self.gap = self.config['retrain_info']['gap']
 
             tf_kwargs = dict(train_size=self.train_size,
                              test_size=self.test_size,
+                             gap=self.gap,
                              period_type=self.period_type)
 
             self.time_folder = TimeFolder(**tf_kwargs)
