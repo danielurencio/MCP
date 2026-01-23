@@ -119,10 +119,12 @@ arr = list()
 start = '2010-01-05'
 end = '2021-09-28'
 
-for i in range(len(commodity_list)):
-    print(commodity_list[i])
-    kpis_df = TaskHandler('sentiment_scores').simple_retrain(dataset, start, end)
+for commodity, df_commodity in commodities_datasets.items():
+    print(commodity)
+    kpis_df = TaskHandler('sentiment_scores').simple_retrain(df_commodity, start, end)
+    kpis_df['commodity'] = commodity
     arr.append(kpis_df)
+
 
 pd.concat(arr).to_csv('sentiment_scores_v0.csv', index=False)
 ```
