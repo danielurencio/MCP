@@ -7,13 +7,9 @@ retrain_info:
     train_size: 52
     test_size: 1
 
-# retrain_info:
-#     period_type: months
-#     train_size: 78
-#     test_size: 18
-
 time_col: 'DATE'
 target: 'norm_distribution_classes'
+id: 'TRADE_ID'
 
 feature_columns:
   - COT_1
