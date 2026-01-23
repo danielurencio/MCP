@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import yaml
 from pathlib import Path
 from functools import reduce
