@@ -219,7 +219,7 @@ The previous command would output the following:
 This functionality is already incorporated within `TaskHandler`. 
 
 #### Training
-A regression model will be configured to predict the target `TARGET_VOL_NORM_RETURN_OIM_5D`, which are the normalized returns of the following 22 days (although the target name in the original file has a `5D` suffix).
+A regression model will be configured to predict the target `TARGET_VOL_NORM_RETURN_OIM_5D`, which are the normalized returns of the following 5 days.
 (See `models/PoC.yaml` for the details on how to configure cross-validation.)
 
 ```python
