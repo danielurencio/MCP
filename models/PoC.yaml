@@ -212,21 +212,12 @@ feature_columns:
   - TRADE_23
   - TRADE_24
   - TRADE_25
-  # - TRADE_12_Dairy
-  # - TRADE_12_Emissions
-  # - TRADE_12_Energy
-  # - TRADE_12_Fertilizer
-  # - TRADE_12_Gas
-  # - TRADE_12_Grains
-  # - TRADE_12_Industrial Material
-  # - TRADE_12_Livestock
-  # - TRADE_12_Metals
-  # - TRADE_12_Oilseeds
-  # - TRADE_12_Precious Metals
-  # - TRADE_12_Softs
+  - BEARISH_SCORE
+  - NEUTRAL_SCORE
+  - BULLISH_SCORE
 
 cross_validation:
-    n_trials: 3
+    n_trials: 30
     hyperparams_ranges:
     - name: n_estimators
       data_type: 'int'
