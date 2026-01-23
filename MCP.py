@@ -232,17 +232,18 @@ class TimeFolder:
 
 
 class ModelTrainer:
-    def __init__(self, time_col, feature_columns, target):
+    def __init__(self, time_col, feature_columns, target, ix):
         self.time_col = time_col
         self.feature_columns = feature_columns
         self.target = target
+        self.ix = ix
 
     @staticmethod
-    def get_datasets(df, time_col):
+    def get_datasets(df, time_col, ix):
         def fn(d):
-            train = df[(df[time_col] >= d[0]) & (df[time_col] < d[1])]
-            valid = df[(df[time_col] >= d[1]) & (df[time_col] <= d[2])] # Important!
-            return train, valid
+            train = df[(df[time_col] >= d[0]) & (df[time_col] < d[1])].reset_index()
+            valid = df[(df[time_col] >= d[1]) & (df[time_col] < d[2])].reset_index() # Important!
+            return train.set_index(ix), valid.set_index(ix)
         return fn
     
     def prepare_dataset(self, df):
@@ -266,8 +267,8 @@ class ModelTrainer:
     
     def retrain(self, df_train, folds, model, evaluator_fn, n_classes=None):
         metrics, predictions, index = [], [], []
-        
-        for datasets in map(self.get_datasets(df_train, self.time_col), folds):
+
+        for datasets in map(self.get_datasets(df_train, self.time_col, self.ix), folds):
             if any(not len(d) for d in datasets):
                 continue
 
@@ -289,9 +290,9 @@ class ModelTrainer:
                           
             metrics.append(float(metric))
             predictions += y_pred.tolist()
-            index += datasets[-1].index.tolist() # Validation Set's index
+            index += [list(d) for d in datasets[-1].index.tolist()] # Validation Set's index
     
-        return metrics, predictions, folds, index
+        return metrics, folds, index, predictions
 
 
 class TimeCrossValidator:
@@ -303,6 +304,7 @@ class TimeCrossValidator:
                  h_ranges,
                  time_col,
                  target,
+                 ix,
                  feature_columns):
 
         self.n_trials = n_trials
@@ -312,6 +314,7 @@ class TimeCrossValidator:
         self.h_ranges = h_ranges
         self.time_col = time_col
         self.target = target
+        self.ix = ix
         self.feature_columns = feature_columns
 
     @staticmethod
@@ -345,7 +348,8 @@ class TimeCrossValidator:
             
             trainer = ModelTrainer(time_col=self.time_col,
                                    feature_columns=self.feature_columns,
-                                   target=self.target)
+                                   target=self.target,
+                                   ix=self.ix)
         
             metrics, _, _, _ = trainer.retrain(df_train,
                                                self.folds,
@@ -388,6 +392,7 @@ class TaskHandler:
         self.problem_type = self.config['problem_type']
         self.target = self.config['target']
         self.time_col = self.config['time_col']
+        self.ix = self.config['ix']
         self.feature_columns = self.config['feature_columns']
         self.evaluator_fn = loss_fns[self.config['loss']]['fn']
 
@@ -425,14 +430,12 @@ class TaskHandler:
     
     
     def parse_kpis_df(self, kpis):
-        columns = ['metric', 'low', 'mid', 'high',
-                   'train_start', 'test_start', 'test_end', 'asset']
         n_kpis = len(kpis)
         kpis_content = [reduce(self.concat_arrs(self.idempotent_list),
                                self.range_indexer(i, kpis))
                         for i in range(len(kpis[0]))]
         
-        return pd.DataFrame(kpis_content, columns=columns)
+        return pd.DataFrame(kpis_content)
 
 
     def cross_validation_through_time(self, dataset, start_date, end_date):
@@ -450,6 +453,7 @@ class TaskHandler:
                           h_ranges=h_ranges,
                           target=self.target,
                           time_col=self.time_col,
+                          ix=self.ix,
                           feature_columns=self.feature_columns)
         
         study = TimeCrossValidator(**tcv_kwargs).perform_optuna_optimization(dataset,
@@ -471,6 +475,7 @@ class TaskHandler:
         
         trainer = ModelTrainer(time_col=self.time_col,
                                feature_columns=self.feature_columns,
+                               ix=self.ix,
                                target=self.target)
 
         return trainer.forward_pass(model, (df_train, df_test))
@@ -486,6 +491,7 @@ class TaskHandler:
         
         trainer = ModelTrainer(time_col=self.time_col,
                                feature_columns=self.feature_columns,
+                               ix=self.ix,
                                target=self.target)
     
         kpis = trainer.retrain(dataset,
@@ -494,4 +500,4 @@ class TaskHandler:
                                self.evaluator_fn,
                                n_classes=n_classes)
 
-        return self.parse_kpis_df(kpis)
+        return self.parse_kpis_df(kpis[-2:])
