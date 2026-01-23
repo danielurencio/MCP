@@ -273,8 +273,14 @@ class ModelTrainer:
 
             if n_classes and datasets[0][self.target].nunique() < n_classes:
                 continue
+                
+            model_fold = ModelObject(
+                model.algorithm_choice,
+                model.problem_type,
+                model.hyperparams
+            )
             
-            y_true, y_pred = self.forward_pass(model, datasets)
+            y_true, y_pred = self.forward_pass(model_fold, datasets)
            
             if model.problem_type == 'regression':
                 metric = evaluator_fn(y_true, y_pred)
