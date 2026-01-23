@@ -190,10 +190,10 @@ from MCP import TimeFolder
 start_date = '2010-01-05'
 end_date = '2021-09-28'
 cv_folds = 5
-train_size, test_size = TimeFolder.sizes_calculator(start_date
-                                                    end_date
+train_size, test_size = TimeFolder.sizes_calculator(start_date,
+                                                    end_date,
                                                     cv_folds=cv_folds,
-                                                    space_to_fil=0.5,    # <-- This is the fraction of the period to be used for testing/validation
+                                                    space_to_fill=0.5,    # <-- This is the fraction of the period to be used for testing/validation
                                                     period_type='weeks', #     in the moving window. In other words, 50% of the periods will be used
                                                     periods=1)           #     to construct 5 folds that will be used to validate/evaluate a model.
 ```
