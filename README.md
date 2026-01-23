@@ -229,7 +229,7 @@ train_start = enhanced_dataset['DATE'].min().strftime('%Y-%m-%d')
 train_end = '2018-03-27'
 test_end = '2021-09-28'
 
-th = TaskHandler('PoC').train_with_best_params(enhanced_dataset, train_start, train_end, test_end)
+model, df_test = TaskHandler('PoC').train_with_best_params(enhanced_dataset, train_start, train_end, test_end)
 ```
 The method `train_with_best_params` performs the following:
 1. Splits the dataset into a training and a hold-out dataset.
@@ -243,4 +243,16 @@ $$
 \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
 $$
 
-The choice is backed by the fact that this metric is more interpretable than the mean squared error, as it is expressed in the same units as the original target. In this case, the target is expressed as z-scores, so our _MAE_ will tell us to what extent, on average, our predictions deviate from the truth.
+The choice is backed by the fact that this metric is more interpretable than the mean squared error, as it is expressed in the same units as the original target. In this case, the target is expressed as z-scores, so our _MAE_ will tell us to what extent our predictions deviate on average from the truth.
+
+```python
+def group_mae(df):
+    y_true = df['y_true'].values
+    y_pred = df['y_pred'].values
+    return mean_absolute_error(y_true, y_pred)
+
+df_test.groupby('DATE').apply(group_mae).plot(title='Monthly MAE')
+```
+<p align="center">
+<img src="imgs/monthly_mae.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
+</p>
