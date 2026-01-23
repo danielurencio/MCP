@@ -9,7 +9,9 @@ retrain_info:
 
 time_col: 'DATE'
 target: 'norm_distribution_classes'
-id: 'TRADE_ID'
+ix:
+  - DATE
+  - TRADE_ID
 
 feature_columns:
   - COT_1
