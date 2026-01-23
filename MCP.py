@@ -262,7 +262,7 @@ class ModelTrainer:
         model.fit(X_train, y_train)
         y_pred = model.predict(X_valid)
 
-        return y_valid, y_pred
+        return y_valid.values, y_pred
     
     
     def retrain(self, df_train, folds, model, evaluator_fn, n_classes=None):
@@ -478,7 +478,14 @@ class TaskHandler:
                                ix=self.ix,
                                target=self.target)
 
-        return trainer.forward_pass(model, (df_train, df_test))
+        y_true, y_pred = trainer.forward_pass(model, (df_train, df_test))
+        
+        parsed_holdout = df_test.reset_index().set_index(self.ix)
+        parsed_holdout = parsed_holdout[[]]
+        parsed_holdout.loc[:, 'y_true'] = y_true
+        parsed_holdout.loc[:, 'y_pred'] = y_pred
+        
+        return y_true, y_pred, model, parsed_holdout.reset_index()
 
 
     def simple_retrain(self, dataset, start_date, end_date, hyperparams={}):
