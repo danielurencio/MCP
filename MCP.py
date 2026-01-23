@@ -392,7 +392,8 @@ class TaskHandler:
             self.train_size = self.config['retrain_info']['train_size']
             self.test_size = self.config['retrain_info']['test_size']
             self.period_type = self.config['retrain_info']['period_type']
-            self.gap = self.config['retrain_info']['gap']
+            self.gap = self.config['retrain_info'].get('gap')
+            self.gap = self.gap if self.gap else 0
 
             tf_kwargs = dict(train_size=self.train_size,
                              test_size=self.test_size,
