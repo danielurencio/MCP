@@ -160,14 +160,23 @@ What that means is that for each week, within the specified period, we will use 
 import pandas as pd
 
 join_cols = ['DATE', 'TRADE_ID']
-sentiment_scores = pd.read_csv('sentiment_scores_v0.csv')
+sentiment_scores = pd.read_csv('sentiment_scores_v0.csv', parse_dates=['test_start'])
+
+renames = {'test_start':'DATE',
+           'low':'BEARISH_SCORE',
+           'mid':'NEUTRAL_SCORE',
+           'high':'BULLISH_SCORE',
+           'asset': 'TRADE_ID'}
+col_selection = ['DATE', 'TRADE_ID', 'BEARISH_SCORE', 'NEUTRAL_SCORE', 'BULLISH_SCORE']
+
+sentiment_scores = sentiment_scores.rename(columns=renames)[col_selection]
 enhanced_dataset = pd.merge(dataset.reset_index(),
                             sentiment_scores,
                             how='left',
                             left_on=join_cols,
                             right_on=join_cols).fillna(-1)
 
-enhanced_dataset = enhanced_dataset[enhhanced_dataset['DATE'] >= sentiment_scores['DATE'].min()]
+enhanced_dataset = enhanced_dataset[enhanced_dataset['DATE'] >= sentiment_scores['DATE'].min()]
 ```
 
 ## Secondary Model
@@ -220,9 +229,9 @@ A regression model will be configured to predict the target `TARGET_VOL_NORM_RET
 (See `models/PoC.yaml` for the details on how to configure cross-validation.)
 
 ```python
-from MCP TaskHandler
+from MCP import TaskHandler
 
-train_start = enhanced_dataset['DATE'].min()
+train_start = enhanced_dataset['DATE'].min().strftime('%Y-%m-%d')
 train_end = '2018-03-27'
 test_end = '2021-09-28'
 
