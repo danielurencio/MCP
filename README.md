@@ -106,6 +106,14 @@ Importantly, only the predictions obtained on these holdout periods (single-peri
 
 As a result, when the secondary model is trained, it only has access to sentiment scores that were computed using past data relative to each observation. The secondary model therefore starts at period $N+1$, ensuring that every feature used at time $t$ is derived exclusively from information available up to time $t-1$.
 
+#### Setup
+In an Unix like environment:
+```python
+python3 -m venv MCP
+source MCP/bin/activate
+pip3 install -r requirements.txt
+```
+
 #### Training
 ```python
 import warnings
@@ -268,7 +276,7 @@ The purpose of this material is to elucidate how a reusable, hence maintainable,
 
 The inspiration of this type of framework is to make it possible to test out several ideas in a rather fast and easy manner such that experimentation and though process is prioritized within an organization that relies on ML solutions for success.
 
-### Live deployment consideration
+### Live deployment considerations
 Reliable Machine Learning in production is ensured by looking after four important pillars that constitute a standard.
 <p align="center">
 <img src="imgs/ml_standard.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
