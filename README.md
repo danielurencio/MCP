@@ -122,7 +122,6 @@ end = '2021-09-28'
 for commodity, df_commodity in commodities_datasets.items():
     print(commodity)
     kpis_df = TaskHandler('sentiment_scores').simple_retrain(df_commodity, start, end)
-    kpis_df['commodity'] = commodity
     arr.append(kpis_df)
 
 names = ('DATE', 'TRADE_ID', 'BEARISH_SCORE', 'NEUTRAL_SCORE', 'BULLISH_SCORE')
