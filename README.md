@@ -258,3 +258,18 @@ df_test.groupby('DATE').apply(group_mae).plot(title='Monthly MAE')
 <p align="center">
 <img src="imgs/weekly_mae.png" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
+Plotting performance as shown in the previous visualization is useful for:
+1. Understanding how stable performance is across time
+2. Whether there are noticable trend shifts that insinuate performance degradation
+   2.1 If degradation is indeed a problem then some of the methods contained in the MCP framework, such as `retrain`, can aid the assesment process of determining how often models should be retrained to keep consistency in predictions.
+
+## Final remarks
+The purpose of this material is to elucidate how a reusable, hence maintainable, framework can be designed such that scalability and iterability is fostered. Rather than looking for the best model possible from the available features the scope and motivation of this design is to provide flexibility across many different problems. This could entail many types of algorithms, many type of prediction problems (regression or classification), and certainly the possibility of stacking models by planning the construction of models through configuration files.
+
+The inspiration of this type of framework is to make it possible to test out several ideas in a rather fast and easy manner such that experimentation and though process is prioritized within an organization that relies on ML solutions for success.
+
+### Live deployment consideration
+Reliable Machine Learning in production is ensured by looking after four important pillars that constitute a standard.
+<p align="center">
+<img src="imgs/ml_standard.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
+</p>
