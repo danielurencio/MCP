@@ -168,8 +168,6 @@ What that means is that for each week, within the specified period, we will use 
 
 
 ```python
-import pandas as pd
-
 join_cols = ['DATE', 'TRADE_ID']
 sentiment_scores = pd.read_parquet('sentiment_scores.parquet')
 
@@ -208,7 +206,7 @@ TimeFolder(train_size,
 
 ```
 The previous command would output the following:
-```python
+```bash
 [[datetime.datetime(2010, 1, 5, 0, 0),    # train start |      intervals are:
   datetime.datetime(2015, 11, 24, 0, 0),  # test start  | -->  [train start, test start) &
   datetime.datetime(2017, 1, 24, 0, 0)],  # test end    |      [test start, test end]
