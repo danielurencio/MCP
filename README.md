@@ -265,6 +265,7 @@ df_test.groupby('DATE').apply(group_mae).plot(title='Monthly MAE')
 <p align="center">
 <img src="imgs/weekly_mae.png" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
+
 Visualizing performance across time is useful for:
 1. Assessing the stability of model performance.
 2. Identifying potential regime shifts or trends that may indicate performance degradation.
