@@ -485,7 +485,7 @@ class TaskHandler:
         parsed_holdout.loc[:, 'y_true'] = y_true
         parsed_holdout.loc[:, 'y_pred'] = y_pred
         
-        return y_true, y_pred, model, parsed_holdout.reset_index()
+        return model, parsed_holdout.reset_index()
 
 
     def simple_retrain(self, dataset, start_date, end_date, hyperparams={}):
