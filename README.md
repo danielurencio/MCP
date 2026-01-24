@@ -117,6 +117,7 @@ pip3 install -r requirements.txt
 #### Training
 ```python
 import warnings
+import pandas as pd
 from MCP import Dataset, TaskHandler
 
 dataset = Dataset.get()
