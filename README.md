@@ -241,17 +241,17 @@ model, df_test = TaskHandler('PoC').train_with_best_params(enhanced_dataset, tra
 ```
 The method `train_with_best_params` performs the following:
 1. Splits the dataset into a training and a hold-out dataset.
-2. Obtains the best hyperparameter set after having done cross-validation through time using a moving window across the training set.
-3. Retrains the model over the entire training set once the best hyperparameters have been obtained.
+2. Performs time-aware cross-validation over the training set using a moving window in order to identify the best hyperparameter configuration.
+3. Retrains the model on the full training set using the selected hyperparameters.
 
 #### Evaluation
-To evaluate the model fit, we will use the Mean Absolute Error (_MAE_).
+Model performance is evaluated using the Mean Absolute Error (MAE):
 
 $$
 \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
 $$
 
-The choice is backed by the fact that this metric is more interpretable than the mean squared error, as it is expressed in the same units as the original target. In this case, the target is expressed as z-scores, so our _MAE_ will tell us to what extent our predictions deviate on average from the truth.
+This metric is chosen for its interpretability. Unlike the mean squared error, MAE is expressed in the same units as the target variable. Since the target is defined in terms of z-scores, the resulting MAE directly quantifies the average deviation of the model’s predictions from the observed values.
 
 ```python
 from sklearn.metrics import mean_absolute_error
@@ -266,20 +266,26 @@ df_test.groupby('DATE').apply(group_mae).plot(title='Monthly MAE')
 <p align="center">
 <img src="imgs/weekly_mae.png" alt="Description of image" style="width:50%; max-width:200px;">
 </p>
-Plotting performance as shown in the previous visualization is useful for:
-1. Understanding how stable performance is across time
-2. Whether there are noticable trend shifts that insinuate performance degradation
-   2.1 If degradation is indeed a problem then some of the methods contained in the MCP framework, such as `retrain`, can aid the assesment process of determining how often models should be retrained to keep consistency in predictions.
+Visualizing performance across time is useful for:
+1. Assessing the stability of model performance.
+2. Identifying potential regime shifts or trends that may indicate performance degradation.
+  * If degradation is observed, some of the utilities provided by the MCP framework (such as `retrain`) can support the assessment of how frequently models should be retrained in order to maintain consistent predictive quality.
 
 ## Final remarks
-The purpose of this material is to elucidate how a reusable, hence maintainable, framework can be designed such that scalability and iterability is fostered. Rather than looking for the best model possible from the available features the scope and motivation of this design is to provide flexibility across many different problems. This could entail many types of algorithms, many type of prediction problems (regression or classification), and certainly the possibility of stacking models by planning the construction of models through configuration files.
+The purpose of this material is to illustrate how a reusable, and therefore maintainable, machine learning framework can be designed to promote scalability and iterative experimentation. Rather than focusing exclusively on identifying a single best-performing model, the motivation behind this design is to enable flexibility across a wide range of problems.
 
-The inspiration of this type of framework is to make it possible to test out several ideas in a rather fast and easy manner such that experimentation and though process is prioritized within an organization that relies on ML solutions for success.
+This includes support for multiple algorithms, different types of prediction tasks (regression or classification), and the ability to stack models by planning their construction through configuration files. The overarching goal is to allow ideas to be tested quickly and systematically, prioritizing experimentation and clear reasoning within organizations that depend on machine learning for decision-making.
 
 ### Live deployment considerations
-Reliable Machine Learning in production is ensured by observing four important pillars that constitute an organization's standard. Everything that is covered in this document relates to developing model training pipelines. Nonetheless, for supporting ML-driven business impact sustainably it is pivotal to consider the following aspects.
+Reliable machine learning in production rests on four foundational pillars that together define an organization’s ML standard. While this document focuses primarily on model training pipelines, sustainable ML-driven impact requires careful consideration of the following components.
 <p align="center">
 <img src="imgs/ml_standard.jpeg" alt="Description of image" style="width:80%; max-width:200px;">
 </p>
-* __Featurestore__: The real backbone of producing machine learning models comes from the capability of producing and maintaining predictive features. Just as pipelines need to be automated and designed in a reliable long-standing fashion, featurestores must be able to gather raw data, transform it and disponibilize it as features in a frequency that is compatible with the frequency in which an organization needs ML outputs for decision-making.
-* __Supervised Training Pipelines__: If featurestores are dilligently managed and kept up-to-date, training models and generating predictions using frameworks as the one proposed in this document should become a "commodity" for further analysis and research. The outputs from either productive or experimental models should be part of the featurstore, or at least some sort of data warehouse, such that comparissons and improvements can ensue.
+
+* __1) Featurestore__: The backbone of any production-grade machine learning system is the ability to generate and maintain predictive features. Featurestores must reliably ingest raw data, apply transformations, and expose features at a frequency aligned with the organization’s decision-making needs.
+
+* __2) Supervised Training Pipelines__: When featurestores are properly maintained, training models and generating predictions using frameworks such as the one presented here should become a routine operation. Outputs from both production and experimental models should be stored (either in the feature store or in a data warehouse) to enable systematic comparison and continuous improvement.
+
+* __3) Backtesting__: Predictions produced by supervised models often inform business rules and strategic decisions. As a result, it is essential to have mechanisms in place to simulate counterfactual or “what-if” scenarios in order to evaluate the real-world impact of ML-driven decisions. Machine learning is a means to an end, not the end itself.
+
+* __4) Production__: The previous three stages must be satisfied, in sequence, before deploying models into a decision-making environment. All components evaluated during training, validation, and backtesting must be reproducible in production. This requires strict parity between training and production data pipelines, careful handling of data leakage, and robust processes for governance, quality assurance, monitoring, and organizational alignment.
