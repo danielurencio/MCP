@@ -277,7 +277,9 @@ The purpose of this material is to elucidate how a reusable, hence maintainable,
 The inspiration of this type of framework is to make it possible to test out several ideas in a rather fast and easy manner such that experimentation and though process is prioritized within an organization that relies on ML solutions for success.
 
 ### Live deployment considerations
-Reliable Machine Learning in production is ensured by looking after four important pillars that constitute a standard.
+Reliable Machine Learning in production is ensured by observing four important pillars that constitute an organization's standard. Everything that is covered in this document relates to developing model training pipelines. Nonetheless, for supporting ML-driven business impact sustainably it is pivotal to consider the following aspects.
 <p align="center">
-<img src="imgs/ml_standard.jpeg" alt="Description of image" style="width:50%; max-width:200px;">
+<img src="imgs/ml_standard.jpeg" alt="Description of image" style="width:80%; max-width:200px;">
 </p>
+* __Featurestore__: The real backbone of producing machine learning models comes from the capability of producing and maintaining predictive features. Just as pipelines need to be automated and designed in a reliable long-standing fashion, featurestores must be able to gather raw data, transform it and disponibilize it as features in a frequency that is compatible with the frequency in which an organization needs ML outputs for decision-making.
+* __Supervised Training Pipelines__: If featurestores are dilligently managed and kept up-to-date, training models and generating predictions using frameworks as the one proposed in this document should become a "commodity" for further analysis and research. The outputs from either productive or experimental models should be part of the featurstore, or at least some sort of data warehouse, such that comparissons and improvements can ensue.
